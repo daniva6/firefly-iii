@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: firefly
+  
+resources:
+- firefly-ns.yaml
+- mariadb-secret.yaml
+- mariabackup-pvc.yaml
+- firefly-mariadb.yaml
+- firefly-backup.yaml
+- firefly-iii-pvc.yaml
+- firefly-iii-secret.yaml
+- firefly-iii.yaml
+- firefly-iii-importer.yaml
+- firefly-ir.yaml
+- firefly-importer-ir.yaml

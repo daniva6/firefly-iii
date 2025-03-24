@@ -1,0 +1,27 @@
+apiVersion: k8s.mariadb.com/v1alpha1
+kind: Backup
+metadata:
+  name: firefly-backup
+spec:
+  mariaDbRef:
+    name: firefly-mariadb
+  schedule:
+    cron: "30 00 * * *"
+    suspend: false
+  maxRetention: 720h # 30 days
+  storage:
+    volume:
+      persistentVolumeClaim:
+        claimName: mariabackup
+  args:
+    - --single-transaction
+    - --databases fireflyiii    
+#    - --all-databases
+  logLevel: info
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      cpu: 300m
+      memory: 512Mi

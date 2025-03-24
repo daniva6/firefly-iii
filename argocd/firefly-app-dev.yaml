@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: firefly
+  namespace: argocd
+spec:
+  destination:
+    name: ''
+    namespace: firefly
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: overlays/dev
+    repoURL: git@github.com:daniva6/firefly-iii.git
+    targetRevision: HEAD
+    plugin: 
+      name: argocd-vault-plugin-kustomize
+      
