@@ -3,6 +3,7 @@
 ## Description
 
 Deploy firefly-iii on k8s with Kustomize and ArgoCD
+Firefly III is a free and open source personal finance manager https://github.com/firefly-iii/firefly-iii
 
 ## Table of Contents
 
