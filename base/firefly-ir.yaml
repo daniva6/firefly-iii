@@ -8,7 +8,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`<url>`)
+    - match: Host('<url>')
       kind: Rule
       services:
         - name: firefly-iii
