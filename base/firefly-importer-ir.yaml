@@ -9,7 +9,7 @@ spec:
   - websecure
   routes:
   - kind: Rule
-    match: Host('<url-importer>')
+    match: Host("<url-importer>")
     services:
     - name: firefly-iii-importer
       port: 8080
@@ -25,7 +25,7 @@ spec:
   - web
   routes:
   - kind: Rule
-    match: Host('<url-importer>')
+    match: Host("<url-importer>")
     middlewares:
     - name: redirect-https
       namespace: traefik
