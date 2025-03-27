@@ -15,3 +15,6 @@ spec:
     targetRevision: HEAD
     plugin: 
       name: argocd-vault-plugin-kustomize
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true      
