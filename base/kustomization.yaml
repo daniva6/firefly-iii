@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: firefly
   
 resources:
-- firefly-ns.yaml
+# - firefly-ns.yaml
 - mariadb-secret.yaml
 - mariabackup-pvc.yaml
 - firefly-mariadb.yaml
