@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- ../../base
+  - ../../base
 
 images:
   - name: fireflyiii/core
@@ -10,5 +10,23 @@ images:
   - name: fireflyiii/data-importer
     newTag: version-1.3.8
 
-
+patches:
+  - target:
+      group: apps
+      version: v1
+      kind: PersistentVolumeClaim
+      name: firefly-iii
+    patch: |-
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 1Ti
+  - target:
+      group: apps
+      version: v1
+      kind: PersistentVolumeClaim
+      name: mariabackup
+    patch: |-
+      - op: replace
+        path: /spec/resources/requests/storage
+        value: 1Ti
 
