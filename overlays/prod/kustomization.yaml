@@ -10,8 +10,10 @@ images:
   - name: fireflyiii/data-importer
     newTag: version-1.3.8
 
+resources:
+  - urbackup-client.yaml
+
 patches:
-  - path: urbackup-client.yaml
   - target:
       kind: PersistentVolumeClaim
       name: firefly-iii
