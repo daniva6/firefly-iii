@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: urbackup-client
+spec:
+  selector:
+    matchLabels:
+      app: urbackup-client
+  template:
+    metadata:
+      labels:
+        app: urbackup-client
+    spec:
+      containers:
+      - env:
+        - name: URBACKUP_SERVER_NAME
+          value: 192.168.0.211
+        - name: URBACKUP_CLIENT_NAME
+          value: firefly
+        - name: URBACKUP_CLIENT_AUTHKEY
+          value: JCEDA7pnUO
+        image: uroni/urbackup-client:latest
+        name: urbackup-client
+        volumeMounts:
+        - mountPath: /backup/mariadb
+          name: backup
+      volumes:
+      - name: backup
+        persistentVolumeClaim:
+          claimName: mariabackup
