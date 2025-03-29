@@ -12,8 +12,6 @@ images:
 
 patches:
   - target:
-      # group: apps
-      # version: v1
       kind: PersistentVolumeClaim
       name: firefly-iii
     patch: |-
@@ -21,8 +19,6 @@ patches:
         path: /spec/resources/requests/storage
         value: "1Ti"
   - target:
-      # group: apps
-      # version: v1
       kind: PersistentVolumeClaim
       name: mariabackup
     patch: |-
