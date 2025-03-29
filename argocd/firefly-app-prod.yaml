@@ -13,8 +13,6 @@ spec:
     path: overlays/prod
     repoURL: https://github.com/daniva6/firefly-iii.git
     targetRevision: HEAD
-    plugin: 
-      name: argocd-vault-plugin-kustomize
   syncPolicy:
     syncOptions:
     - CreateNamespace=true      
