@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: urbackup-client
+  annotations:
+    avp.kubernetes.io/path: "k8s-secrets/data/firefly"      
 spec:
   selector:
     matchLabels:
@@ -14,11 +16,11 @@ spec:
       containers:
       - env:
         - name: URBACKUP_SERVER_NAME
-          value: 192.168.0.211
+          value: <path:k8s-secrets/data/common#urbackup-dsn>
         - name: URBACKUP_CLIENT_NAME
           value: firefly
         - name: URBACKUP_CLIENT_AUTHKEY
-          value: JCEDA7pnUO
+          value: <urbackup_client_authkey>
         image: uroni/urbackup-client:latest
         name: urbackup-client
         volumeMounts:
