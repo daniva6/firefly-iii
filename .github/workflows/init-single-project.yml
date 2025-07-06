@@ -1,0 +1,114 @@
+permissions:
+  contents: write
+  
+name: Init Single-Project Structure
+  
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'Application name'
+        required: true  
+      namespace:
+        description: 'Namespace name'
+        required: true          
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        
+      - name: 🔍 Determine repo URL
+        id: repo
+        run: |
+          if [[ "${{ github.event.repository.private }}" == "true" ]]; then
+            echo "url=git@github.com:${{ github.repository }}.git" >> $GITHUB_OUTPUT
+          else
+            echo "url=https://github.com/${{ github.repository }}.git" >> $GITHUB_OUTPUT
+          fi
+        shell: bash        
+        
+      - name: 📁 Create folders and ArgoCD manifests
+
+        env:
+          REPO_URL: ${{ steps.repo.outputs.url }}
+          NAME: ${{ github.event.inputs.name }}
+          NAMESPACE: ${{ github.event.inputs.namespace }}
+      
+        run: |
+          mkdir -p base overlays/dev overlays/prod
+
+          # base/kustomization.yaml
+          echo "apiVersion: kustomize.config.k8s.io/v1beta1" > base/kustomization.yaml
+          echo "kind: Kustomization" >> base/kustomization.yaml
+          echo " " >> base/kustomization.yaml
+          echo "resources: []" >> base/kustomization.yaml
+
+          # overlays/dev/kustomization.yaml
+          echo "apiVersion: kustomize.config.k8s.io/v1beta1" > overlays/dev/kustomization.yaml
+          echo "kind: Kustomization" >> overlays/dev/kustomization.yaml
+          echo " " >> overlays/dev/kustomization.yaml
+          echo "resources:" >> overlays/dev/kustomization.yaml
+          echo "  - ../../base" >> overlays/dev/kustomization.yaml
+
+          # overlays/prod/kustomization.yaml
+          echo "apiVersion: kustomize.config.k8s.io/v1beta1" > overlays/prod/kustomization.yaml
+          echo "kind: Kustomization" >> overlays/prod/kustomization.yaml
+          echo " " >> overlays/prod/kustomization.yaml
+          echo "resources:" >> overlays/prod/kustomization.yaml
+          echo "  - ../../base" >> overlays/prod/kustomization.yaml
+
+          # overlays/dev/argocd-app.yaml
+          cat > overlays/dev/argocd-app.yaml <<EOF
+            apiVersion: argoproj.io/v1alpha1
+            kind: Application
+            metadata:
+              name: $NAME
+              namespace: argocd
+            spec:
+              project: default
+              source:
+                repoURL: $REPO_URL
+                targetRevision: main
+                path: overlays/dev
+              destination:
+                server: https://kubernetes.default.svc
+                namespace: $NAMESPACE
+              syncPolicy:
+                syncOptions:
+                - CreateNamespace=true                
+                automated:
+                  prune: true
+                  selfHeal: true
+          EOF
+
+          # overlays/prod/argocd-app.yaml
+          cat > overlays/prod/argocd-app.yaml <<EOF
+            apiVersion: argoproj.io/v1alpha1
+            kind: Application
+            metadata:
+              name: $NAME
+              namespace: argocd
+            spec:
+              project: default
+              source:
+                repoURL: $REPO_URL
+                targetRevision: HEAD
+                path: overlays/prod
+              destination:
+                server: https://kubernetes.default.svc
+                namespace: $NAMESPACE
+              syncPolicy:
+                syncOptions:
+                - CreateNamespace=true        
+          EOF
+
+      - name: 💾 Commit and push
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add base overlays
+          git commit -m "📦 Init single-project folder structure with Kustomize + ArgoCD"
+          git push

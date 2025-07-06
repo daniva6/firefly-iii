@@ -1,0 +1,48 @@
+name: 🚀 Promote to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Release tag to promote (e.g., v1.2.3)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  promote:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: ⬇️ Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🔍 Ensure tag exists (create if missing)
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          if git ls-remote --tags origin | grep -q "refs/tags/${{ github.event.inputs.version }}"; then
+            echo "✅ Tag ${{ github.event.inputs.version }} already exists remotely."
+          else
+            echo "🔖 Creating annotated tag ${{ github.event.inputs.version }}."
+            git tag -a ${{ github.event.inputs.version }} -m "Release ${{ github.event.inputs.version }}"
+            git push origin ${{ github.event.inputs.version }}
+          fi
+
+      - name: 🔧 Update ArgoCD manifest
+        run: |
+          echo "🛠 Updating targetRevision to ${{ github.event.inputs.version }}"
+          sed -i -E "0,/targetRevision:/s/(targetRevision:\s*).*/\1${{ github.event.inputs.version }}/" overlays/prod/argocd-app.yaml
+
+      - name: 💾 Commit and push ArgoCD update
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add overlays/prod/argocd-app.yaml
+          git commit -m "📦 Promote ${{ github.event.inputs.version }} to production"
+          git push origin main
