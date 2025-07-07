@@ -3,6 +3,9 @@ kind: Kustomization
 
 resources:
 - ../../base
+  - ../../base
+  - urbackup-pvc.yaml
+  - urbackup-client.yaml
 
 images:
   - name: fireflyiii/core
