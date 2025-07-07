@@ -8,6 +8,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: cephrdb-hdd-r2-squid
+  storageClassName: cephrbd-hdd-r2-squid
   volumeMode: Filesystem
 
