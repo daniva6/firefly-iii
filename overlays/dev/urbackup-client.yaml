@@ -15,7 +15,14 @@ spec:
     spec:
       securityContext:
         runAsUser: 0
-        fsGroup: 0    
+        fsGroup: 0 
+      initContainers:
+      - name: fix-permissions
+        image: busybox
+        command: ["sh", "-c", "chown -R 0:0 /usr/local/var/urbackup && chmod -R 770 /usr/local/var/urbackup"]
+        volumeMounts:
+          - name: urbackup-data
+            mountPath: /usr/local/var/urbackup
       containers:
       - env:
         - name: URBACKUP_SERVER_NAME
