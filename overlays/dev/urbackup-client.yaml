@@ -13,6 +13,9 @@ spec:
       labels:
         app: urbackup-client
     spec:
+      securityContext:
+        runAsUser: 0
+        fsGroup: 0    
       containers:
       - env:
         - name: URBACKUP_SERVER_NAME
@@ -24,8 +27,9 @@ spec:
         image: uroni/urbackup-client:latest
         name: urbackup-client
         volumeMounts:
-        - mountPath: /usr/local/var
-          name: urbackup           
+        - mountPath: /usr/local/var/urbackup
+          name: urbackup  
+          readOnly: false          
         - mountPath: /backup/mariadb
           name: backup
       volumes:
