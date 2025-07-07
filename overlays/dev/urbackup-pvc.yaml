@@ -4,10 +4,10 @@ metadata:
   name: urbackup
 spec:
   accessModes:
-  - ReadWriteOnce
+  - ReadWriteMany
   resources:
     requests:
       storage: 1Gi
-  storageClassName: cephrbd-hdd-r2-squid
+  storageClassName: cephfs-hdd-r2-squid
   volumeMode: Filesystem
 
