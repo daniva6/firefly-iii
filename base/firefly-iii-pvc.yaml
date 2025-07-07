@@ -8,5 +8,5 @@ spec:
   resources:
     requests:
       storage: 100Gi
-  storageClassName: cephfs-hdd-r2
+  storageClassName: cephfs-hdd-r2-squid
 

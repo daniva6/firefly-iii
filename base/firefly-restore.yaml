@@ -2,7 +2,6 @@ apiVersion: k8s.mariadb.com/v1alpha1
 kind: Restore
 metadata:
   name: firefly-restore
-  namespace: firefly
 spec:
   mariaDbRef:
     name: firefly-mariadb
