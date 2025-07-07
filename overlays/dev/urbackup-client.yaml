@@ -21,7 +21,7 @@ spec:
         image: busybox
         command: ["sh", "-c", "chown -R 0:0 /usr/local/var/urbackup && chmod -R 770 /usr/local/var/urbackup"]
         volumeMounts:
-          - name: urbackup-data
+          - name: urbackup
             mountPath: /usr/local/var/urbackup
       containers:
       - env:
