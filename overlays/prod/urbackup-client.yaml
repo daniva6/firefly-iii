@@ -21,7 +21,7 @@ spec:
           value: firefly
         - name: URBACKUP_CLIENT_AUTHKEY
           value: <urbackup_client_authkey>
-        image: uroni/urbackup-client:latest
+        image: daniva6/urbackup-client:latest
         name: urbackup-client
         volumeMounts:
         - mountPath: /usr/local/var/urbackup
