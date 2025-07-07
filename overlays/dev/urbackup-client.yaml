@@ -24,14 +24,14 @@ spec:
         image: uroni/urbackup-client:latest
         name: urbackup-client
         volumeMounts:
-        # - mountPath: /usr/local/var/urbackup
-          # name: urbackup           
+        - mountPath: /usr/local/var
+          name: urbackup           
         - mountPath: /backup/mariadb
           name: backup
       volumes:
-      # - name: urbackup
-        # persistentVolumeClaim:
-          # claimName: urbackup         
+      - name: urbackup
+        persistentVolumeClaim:
+          claimName: urbackup         
       - name: backup
         persistentVolumeClaim:
           claimName: mariabackup
