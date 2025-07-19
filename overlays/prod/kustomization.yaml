@@ -8,18 +8,18 @@ resources:
 
 images:
   - name: fireflyiii/core
-    newTag: version-6.2.10
+    newTag: version-6.2.21
   - name: fireflyiii/data-importer
     newTag: version-1.6.1
 
-patches:
-  - target:
-      kind: PersistentVolumeClaim
-      name: firefly-iii
-    patch: |-
-      - op: replace
-        path: /spec/resources/requests/storage
-        value: "1Ti"
+# patches:
+  # - target:
+      # kind: PersistentVolumeClaim
+      # name: firefly-iii
+    # patch: |-
+      # - op: replace
+        # path: /spec/resources/requests/storage
+        # value: "1Ti"
   # - target:
       # kind: PersistentVolumeClaim
       # name: mariabackup
