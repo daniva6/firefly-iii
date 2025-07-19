@@ -28,6 +28,8 @@ spec:
           name: urbackup           
         - mountPath: /backup/mariadb
           name: backup
+        - mountPath: /backup/upload
+          name: upload
       volumes:
       - name: urbackup
         persistentVolumeClaim:
@@ -35,3 +37,6 @@ spec:
       - name: backup
         persistentVolumeClaim:
           claimName: mariabackup
+      - name: upload
+        persistentVolumeClaim:
+          claimName: firefly-iii
