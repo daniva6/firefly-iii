@@ -12,7 +12,7 @@ spec:
   source:
     path: overlays/prod
     repoURL: https://github.com/daniva6/firefly-iii.git
-    targetRevision: v1.0.5
+    targetRevision: v1.0.6
   syncPolicy:
     syncOptions:
     - CreateNamespace=true      
