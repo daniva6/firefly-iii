@@ -6,6 +6,6 @@ resources:
 
 images:
   - name: fireflyiii/core
-    newTag: version-6.2.10
+    newTag: version-6.2.21
   - name: fireflyiii/data-importer
     newTag: version-1.6.1
