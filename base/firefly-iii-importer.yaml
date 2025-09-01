@@ -48,3 +48,10 @@ spec:
         - containerPort: 8080
           name: firefly-iii
         imagePullPolicy: Always
+        volumeMounts:
+        - mountPath: /var/www/html/storage/configurations
+          name: firefly-iii-importer
+      volumes:
+      - name: firefly-iii-importer
+        persistentVolumeClaim:
+          claimName: firefly-iii-importer

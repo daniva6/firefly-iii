@@ -9,6 +9,7 @@ resources:
 - firefly-iii-pvc.yaml
 - firefly-iii-secret.yaml
 - firefly-iii.yaml
+- firefly-iii-importer-pvc.yaml
 - firefly-iii-importer.yaml
 - firefly-ir.yaml
 - firefly-importer-ir.yaml
