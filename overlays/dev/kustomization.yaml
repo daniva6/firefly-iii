@@ -4,8 +4,8 @@ kind: Kustomization
 resources:
   - ../../base
 
-images:
-  - name: fireflyiii/core
-    newTag: version-6.2.21
-  - name: fireflyiii/data-importer
-    newTag: version-1.6.1
+# images:
+  # - name: fireflyiii/core
+    # newTag: version-6.2.21
+  # - name: fireflyiii/data-importer
+    # newTag: version-1.6.1
